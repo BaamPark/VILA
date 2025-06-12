@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DEFAULT_RUN_NAME="vila-qwen2-vl-7b-sft"
-DEFAULT_GLOBAL_TRAIN_BATCH_SIZE=2048
+DEFAULT_RUN_NAME="NVILA-Lite-8B-finetune-trial"
+DEFAULT_GLOBAL_TRAIN_BATCH_SIZE=2
 DEFAULT_GRADIENT_ACCUMULATION_STEPS=2
 
 STAGE_PATH=${1:-"runs/train/nvila-8b-pretrain/model"}
