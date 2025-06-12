@@ -47,4 +47,11 @@ torchrun \
         --gradient_checkpointing True \
         --dataloader_num_workers 16 \
         --vflan_no_system_prompt True \
-        --report_to wandb
+        --report_to none \
+        --lora_enable \
+        --lora_r 8 \
+        --lora_alpha 16 \
+        --lora_dropout 0.05 \
+        --lora_bias "none" \
+        --lora_llm True \
+        --lora_vt True \
