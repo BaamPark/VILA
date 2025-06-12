@@ -1,0 +1,1 @@
+bash scripts/NVILA-Lite/sft.sh Efficient-Large-Model/NVILA-Lite-8B BDD_train
