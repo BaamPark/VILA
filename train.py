@@ -20,7 +20,7 @@ os.environ["OMP_NUM_THREADS"] = "1"
 # --- Torchrun command ---
 cmd = [
     "torchrun",
-    f"--nproc_per_node={GPUS_PER_NODE}",  # only this is needed for multi-GPU single-node
+    f"--nproc_per_node={GPUS_PER_NODE}",
     "llava/train/train_mem.py",
     "--deepspeed", "scripts/zero3.json",
     "--model_name_or_path", STAGE_PATH,
@@ -35,7 +35,7 @@ cmd = [
     "--image_aspect_ratio", "dynamic",
     "--bf16", "True",
     "--output_dir", f"{OUTPUT_DIR}/model",
-    "--num_train_epochs", "1",
+    "--num_train_epochs", "1", #! key parameter
     "--per_device_train_batch_size", str(PER_DEVICE_TRAIN_BATCH_SIZE),
     "--gradient_accumulation_steps", str(GRADIENT_ACCUMULATION_STEPS),
     "--evaluation_strategy", "no",
@@ -61,6 +61,8 @@ cmd = [
     "--lora_bias", "none", 
     "--lora_llm", "True", #! key parameter
     "--lora_vt", "False" #! key parameter
+    # "--vision_tower_lr", "2e-6",
+    # "--tune_vision_layernorm_only", "True"
 ]
 
 # --- Run the multi-GPU training ---

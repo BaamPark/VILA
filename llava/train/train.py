@@ -631,28 +631,54 @@ def train():
     if training_args.lora_enable:
         if not training_args.lora_llm:
             model.get_llm().requires_grad_(training_args.tune_language_model)
-        if model.get_vision_tower():
-            if training_args.lora_vt:
 
+        if model.get_vision_tower():
+            #### new block1 start ####
+            vt = model.get_vision_tower()
+            if training_args.tune_vision_layernorm_only:
+                print("🔧 Tuning ViT LayerNorms only...")
+                for name, param in vt.named_parameters():
+                    if "layernorm" in name.lower() or "norm" in name.lower():
+                        param.requires_grad = True
+                    else:
+                        param.requires_grad = False
+            else:
+                vt.requires_grad_(training_args.tune_vision_tower)
+            #### new block1 end ####
+
+            if training_args.lora_vt:
                 def make_inputs_require_grad(module, input, output):
                     output.requires_grad_(True)
 
-                model.get_vision_tower().vision_tower.get_input_embeddings().register_forward_hook(
-                    make_inputs_require_grad
-                )
-            elif training_args.tune_vision_tower:
-                model.get_vision_tower().requires_grad_(training_args.tune_vision_tower)
+                vt.vision_tower.get_input_embeddings().register_forward_hook(make_inputs_require_grad)
+
             model.get_mm_projector().requires_grad_(training_args.tune_mm_projector)
             mprint(f"mm projector {training_args.tune_mm_projector}")
+
             model.print_trainable_parameters()
+
     else:
         model.get_llm().requires_grad_(training_args.tune_language_model)
         mprint(f"Tunable parameters:\nlanguage model {training_args.tune_language_model}")
+
         if model.get_vision_tower():
-            model.get_vision_tower().requires_grad_(training_args.tune_vision_tower)
+            #### new block2 start ####
+            vt = model.get_vision_tower()
+            if training_args.tune_vision_layernorm_only:
+                print("🔧 Tuning ViT LayerNorms only...")
+                for name, param in vt.named_parameters():
+                    if "layernorm" in name.lower() or "norm" in name.lower():
+                        param.requires_grad = True
+                    else:
+                        param.requires_grad = False
+            else:
+                vt.requires_grad_(training_args.tune_vision_tower)
+            #### new block2 end ####
+
             model.get_mm_projector().requires_grad_(training_args.tune_mm_projector)
             mprint(f"vision tower {training_args.tune_vision_tower}")
             mprint(f"mm projector {training_args.tune_mm_projector}")
+
             trainable_params, all_param = get_nb_trainable_parameters(model)
             print(
                 f"trainable params: {trainable_params:,d} || all params: {all_param:,d} || trainable%: {100 * trainable_params / all_param:.4f}"

@@ -1,4 +1,4 @@
-BDD_train:
+BDD:
     _target_: llava.data.LLaVADataset
-    data_path: /home/beomseok/AICityTrack2/data/BDD_dataset_100/dataset.json
-    media_dir: /home/beomseok/AICityTrack2/data/BDD_dataset_100
+    data_path: /home/beomseok/AICityTrack2/data/BDD_dataset/dataset.json
+    media_dir: /home/beomseok/AICityTrack2/data/BDD_dataset

@@ -224,6 +224,8 @@ class TrainingArguments(transformers.TrainingArguments):
         metadata={"help": "Quantization data type to use. Should be one of `fp4` or `nf4`."},
     )
     bits: int = field(default=16, metadata={"help": "How many bits to use."})
+    
+    tune_vision_layernorm_only: bool = field(default=False) #! added
     # lora-related
     lora_enable: bool = False
     use_dora: bool = False
