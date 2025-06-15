@@ -26,6 +26,45 @@ Swap:          63Gi        30Gi        33Gi
 3. Open `train.py` and set `DATA_MIXTURE` to the registered the dataset name
 
 4. Lastly, run `train.py` to finetune the NVILA.
+5. After completion of finetuning, you will see as follows:
+```bash
+runs/WTS_4096_r16_a32/model
+├── checkpoint-3000
+│   ├── adapter_config.json
+│   ├── adapter_model.safetensors
+│   ├── config.json
+│   ├── global_step3000
+│   │   ├── bf16_zero_pp_rank_0_mp_rank_00_optim_states.pt
+│   │   ├── bf16_zero_pp_rank_1_mp_rank_00_optim_states.pt
+│   │   ├── zero_pp_rank_0_mp_rank_00_model_states.pt
+│   │   └── zero_pp_rank_1_mp_rank_00_model_states.pt
+│   ├── latest
+│   ├── non_lora_trainables.bin
+│   ├── README.md
+│   ├── rng_state_0.pth
+│   ├── rng_state_1.pth
+│   ├── scheduler.pt
+│   ├── trainer_state.json
+│   └── zero_to_fp32.py
+```
+
+
+### How to load finetuned model
+When using LoRA (`peft`), you must load the base model first, then load the LoRA-adapted weights on top of it. See the below example.
+``` python
+from llava import load
+from PIL import Image as Image
+from peft import PeftModel, PeftConfig
+model_path = "Efficient-Large-Model/NVILA-Lite-8B"
+peft_path = "runs/BDD_4096_r16_a32/model"
+image_path = "/home/beomseok/AICityTrack2/data/BDD_dataset/images/0.jpg"
+prompt = "This image is from the prerecognition phase of a traffic scene. Describe the pedestrian."
+base_model = load(model_path)
+model = PeftModel.from_pretrained(base_model, peft_path)
+img = Image.open(image_path)
+inputs = [img, prompt]
+response = model.generate_content(inputs)
+```
 
 ## Parameters
 These are the key parameters we should consider:

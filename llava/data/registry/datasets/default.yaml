@@ -7,3 +7,13 @@ WTS:
     _target_: llava.data.LLaVADataset
     data_path: /home/beomseok/AICityTrack2/data/WTS_dataset/dataset.json
     media_dir: /home/beomseok/AICityTrack2/data/WTS_dataset
+
+DecomposedBDD:
+    _target_: llava.data.LLaVADataset
+    data_path: /home/beomseok/AICityTrack2/data/Decomposed_BDD_dataset/dataset.json
+    media_dir: /home/beomseok/AICityTrack2/data/Decomposed_BDD_dataset
+
+DecomposedWTS:
+    _target_: llava.data.LLaVADataset
+    data_path: /home/beomseok/AICityTrack2/data/Decomposed_WTS_dataset/dataset.json
+    media_dir: /home/beomseok/AICityTrack2/data/Decomposed_WTS_dataset

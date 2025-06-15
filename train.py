@@ -4,7 +4,7 @@ import time
 
 # --- Set user variables ---
 STAGE_PATH = "Efficient-Large-Model/NVILA-Lite-8B"
-DATA_MIXTURE = "BDD"
+DATA_MIXTURE = "DecomposedBDD"
 OUTPUT_DIR = "runs/WTS_4096_r16_a32"
 RUN_NAME = "NVILA-Lite-8B-test"
 
