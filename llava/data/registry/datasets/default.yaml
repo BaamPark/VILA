@@ -2,3 +2,8 @@ BDD:
     _target_: llava.data.LLaVADataset
     data_path: /home/beomseok/AICityTrack2/data/BDD_dataset/dataset.json
     media_dir: /home/beomseok/AICityTrack2/data/BDD_dataset
+
+WTS:
+    _target_: llava.data.LLaVADataset
+    data_path: /home/beomseok/AICityTrack2/data/WTS_dataset/dataset.json
+    media_dir: /home/beomseok/AICityTrack2/data/WTS_dataset

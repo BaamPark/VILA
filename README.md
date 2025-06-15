@@ -39,6 +39,7 @@ These are the key parameters we should consider:
 - `tune_vision_tower`: whether to fine-tune the entire vision encoder (ViT).
 - `lora_enable`: enables LoRA.
 - `lora_r`: LoRA rank; controls the size of low-rank adaptation matrices.
+- `lora_alpha`: it's common practice to set `lora_alpha = 2 * lora_r`.
 - `lora_llm`: apply LoRA to the LLM component (set to True for our setup).
 - `lora_vt`: apply LoRA to the vision encoder (set to False unless you're tuning the visual backbone).
 
@@ -47,7 +48,7 @@ These are my rationales for parameter values
 - `GLOBAL_TRAIN_BATCH_SIZE=2`: This is lowest we can do to reduce the VRAM usage.
 - `num_train_epochs = 1`: Top1 fine-tune with one epoch. Top2 fine-tune with three epochs. In LLM it's common to set small epochs.
 - `learning_rate = 1e-4`: Top1 and Top2 did the same. 
-- `model_max_length=2048`: The default value is 4096. To shorten the VRAM usage, I set it 2048. One largest token length in WTS dataset for one pedestrian caption is 275.
+- `model_max_length=4096`: The default value is 4096. It might shorten the VRAM usage if you set 2048 but when inputting single image, we require 4096 context window due to dynamic_s2 method. Therefore, we will use default value.
 - `dataloader_num_workers=0`: The default is 16. Higher values may accelarate the batch loading on GPU but takes a lot of DRAM.
 - `tune_mm_projector=False`: I set it false because there is no point of finetuning when freezing ViT
 - `lora_r=16`: The default is 64. Lower the rank, lower the VRAM usage.

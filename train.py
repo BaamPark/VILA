@@ -1,10 +1,11 @@
 import os
 import subprocess
+import time
 
 # --- Set user variables ---
 STAGE_PATH = "Efficient-Large-Model/NVILA-Lite-8B"
 DATA_MIXTURE = "BDD"
-OUTPUT_DIR = "runs/BDD_trainset"
+OUTPUT_DIR = "runs/WTS_4096_r16_a32"
 RUN_NAME = "NVILA-Lite-8B-test"
 
 # --- Multi-GPU settings (single node) ---
@@ -47,7 +48,7 @@ cmd = [
     "--warmup_ratio", "0.03",
     "--lr_scheduler_type", "cosine",
     "--logging_steps", "1",
-    "--model_max_length", "2048", #! key parameter
+    "--model_max_length", "4096", #! key parameter
     "--gradient_checkpointing", "True",
     "--dataloader_num_workers", "0", #! key parameter
     "--vflan_no_system_prompt", "True",
@@ -66,4 +67,23 @@ cmd = [
 ]
 
 # --- Run the multi-GPU training ---
-subprocess.run(cmd)
+# subprocess.run(cmd)
+
+# --- Retry loop ---
+MAX_RETRIES = 100  # Set to 0 for infinite loop
+RETRY_DELAY = 30   # Seconds to wait before retrying
+
+retry_count = 0
+while True:
+    print(f"\n🟢 Attempt #{retry_count + 1} starting...\n")
+    result = subprocess.run(cmd)
+    if result.returncode == 0:
+        print("✅ Training completed successfully.")
+        break
+    else:
+        print(f"❌ Training failed with exit code {result.returncode}. Retrying in {RETRY_DELAY} seconds...")
+        retry_count += 1
+        if MAX_RETRIES and retry_count >= MAX_RETRIES:
+            print("❌ Reached max retry limit. Exiting.")
+            break
+        time.sleep(RETRY_DELAY)
