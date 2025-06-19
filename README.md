@@ -74,6 +74,7 @@ These are the key parameters we should consider:
 - `learning_rate`: global learning rate;
 - `model_max_length`: maximum input sequence length; higher values increase memory usage quadratically.
 - `dataloader_num_workers`: Number of workers for pytorch dataloader.
+- `image_aspect_ratio`: data processing in model end. To finetune with multiimage, set it `resize`
 - `tune_mm_projector`: whether to fine-tune the multi-modal projector.
 - `tune_vision_tower`: whether to fine-tune the entire vision encoder (ViT).
 - `lora_enable`: enables LoRA.
@@ -91,6 +92,7 @@ These are my rationales for parameter values
 - `dataloader_num_workers=0`: The default is 16. Higher values may accelarate the batch loading on GPU but takes a lot of DRAM.
 - `tune_mm_projector=False`: I set it false because there is no point of finetuning when freezing ViT
 - `lora_r=16`: The default is 64. Lower the rank, lower the VRAM usage.
+- `image_aspect_ratio=dynamic`: use `dydnamic` (default) for single image. you need to set it to `resize` to finetune with multiimage. Hardware cannot handle it with `dynamic`
 
 ## Error you might encounter
 If you encounter these runtime error, you can simply redo `train.py`. It will exactly redo the finetuning where it left off keeping the decayed learning rate.

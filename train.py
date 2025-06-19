@@ -33,7 +33,7 @@ cmd = [
     "--mm_vision_select_layer", "-2",
     "--mm_use_im_start_end", "False",
     "--mm_use_im_patch_token", "False",
-    "--image_aspect_ratio", "dynamic",
+    "--image_aspect_ratio", "dynamic", #! key parameter
     "--bf16", "True",
     "--output_dir", f"{OUTPUT_DIR}/model",
     "--num_train_epochs", "1", #! key parameter
