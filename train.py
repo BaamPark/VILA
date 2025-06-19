@@ -4,8 +4,8 @@ import time
 
 # --- Set user variables ---
 STAGE_PATH = "Efficient-Large-Model/NVILA-Lite-8B"
-DATA_MIXTURE = "DecomposedBDD"
-OUTPUT_DIR = "runs/WTS_4096_r16_a32"
+DATA_MIXTURE = "WTSBDD"
+OUTPUT_DIR = "runs/WTSBDD"
 RUN_NAME = "NVILA-Lite-8B-test"
 
 # --- Multi-GPU settings (single node) ---
@@ -57,7 +57,7 @@ cmd = [
     "--tune_vision_tower", "False", #! key parameter
     "--lora_enable", #! key parameter
     "--lora_r", "16", #! key parameter
-    "--lora_alpha", "16",
+    "--lora_alpha", "32",
     "--lora_dropout", "0.05",
     "--lora_bias", "none", 
     "--lora_llm", "True", #! key parameter
