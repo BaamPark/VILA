@@ -96,7 +96,9 @@ def extract_media(
                     # if token in part:
                     #     logger.warning(f"Media token '{token}' found in text: '{part}'. Removed.")                        
                     #     part = part.replace(token, "").strip()
-                text += part
+
+                #! I changed text += part to text = part
+                text = part
             elif isinstance(part, (Image, PIL.Image.Image)):
                 if draft:
                     media["image"].append(part)
