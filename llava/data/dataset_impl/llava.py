@@ -64,8 +64,7 @@ class LLaVADataset(BaseDataset):
         #     message["value"] = _remove_media_tokens(message["value"])
 
         # Add media to the beginning of the first message
-        #! I comment line the below line to preserve the order of <image> placeholder
-        # messages[0]["value"] = medias + [messages[0]["value"]]
+        messages[0]["value"] = medias + [messages[0]["value"]]
         return messages
 
 
