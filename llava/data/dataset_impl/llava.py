@@ -59,11 +59,13 @@ class LLaVADataset(BaseDataset):
                 medias.append(Video(os.path.join(self.media_dir, video_path)))
 
         # Remove media tokens from messages
-        for message in messages:
-            message["value"] = _remove_media_tokens(message["value"])
+        #! I comment line the below two lines to preserve the order of <image> placeholder
+        # for message in messages:
+        #     message["value"] = _remove_media_tokens(message["value"])
 
         # Add media to the beginning of the first message
-        messages[0]["value"] = medias + [messages[0]["value"]]
+        #! I comment line the below line to preserve the order of <image> placeholder
+        # messages[0]["value"] = medias + [messages[0]["value"]]
         return messages
 
 

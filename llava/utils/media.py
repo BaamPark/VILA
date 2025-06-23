@@ -94,7 +94,8 @@ def extract_media(
                 for token in MEDIA_TOKENS.values():
                     if token in part:
                         logger.warning(f"Media token '{token}' found in text: '{part}'. Removed.")
-                        part = part.replace(token, "").strip()
+                        #! I comment the below line to preserve the order of <image> placeholder
+                        # part = part.replace(token, "").strip()
                 text += part
             elif isinstance(part, (Image, PIL.Image.Image)):
                 if draft:
