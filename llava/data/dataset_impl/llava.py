@@ -11,7 +11,9 @@ from llava.utils import io, make_list
 
 __all__ = ["LLaVADataset", "LLaVANextDataset", "LLaVANextVideoDataset"]
 
-
+#! See this. This is where <image> is brought to the first place in the sequence
+#! e.g. "<image>\n This image is from the avoidance phase of a traffic scene.Pedestrian: <image>\n\nDescribe the pedestrian."
+#! The above sequnce will be "<image><image>\n This image is from the avoidance phase of a traffic scene.Pedestrian: \n\nDescribe the pedestrian."
 def _remove_media_tokens(text: str) -> str:
     for token in ["<image>", "<video>"]:
         text = text.replace(token + "\n", "").replace("\n" + token, "").replace(token, "")
