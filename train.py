@@ -4,8 +4,8 @@ import time
 
 # --- Set user variables ---
 STAGE_PATH = "Efficient-Large-Model/NVILA-Lite-8B"
-DATA_MIXTURE = "WTSBDD"
-OUTPUT_DIR = "runs/WTSBDD"
+DATA_MIXTURE = "TSDA"
+OUTPUT_DIR = "runs/TSDA"
 RUN_NAME = "NVILA-Lite-8B-test"
 
 # --- Multi-GPU settings (single node) ---
