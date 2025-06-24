@@ -92,13 +92,13 @@ def extract_media(
         for part in make_list(message["value"]):
             if isinstance(part, str):
                 #! I comment the below four line to preserve the order of <image> placeholder
-                # for token in MEDIA_TOKENS.values():
-                    # if token in part:
-                    #     logger.warning(f"Media token '{token}' found in text: '{part}'. Removed.")                        
-                    #     part = part.replace(token, "").strip()
+                for token in MEDIA_TOKENS.values():
+                    if token in part:
+                        logger.warning(f"Media token '{token}' found in text: '{part}'. Removed.")                        
+                        part = part.replace(token, "").strip()
 
                 #! I changed text += part to text = part
-                text = part
+                text += part
             elif isinstance(part, (Image, PIL.Image.Image)):
                 if draft:
                     media["image"].append(part)
